@@ -1,101 +1,81 @@
+import { Button } from "@/components/ui/button";
 import Image from "next/image";
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <div className="bg-gradient-to-br from-blue-200 to-purple-400 grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+      {/* Pretty Questopia font */}
+      <h1 className="text-8xl font-extrabold text-center bg-gradient-to-r from-purple-600 to-blue-500 text-transparent bg-clip-text py-4 font-fredoka mt-16">
+        <strong>Questopia</strong>
+      </h1>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+      {/* Animated Images */}
+      <div className="flex items-center justify-center gap-8">
+        {/* First Image */}
+        <div className="relative w-24 h-24 animate-wiggle">
+          <Image
+            src="/images/calculator.png" // Replace with your first image path
+            alt="Calculator"
+            fill
+            className="object-contain"
+          />
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+
+        {/* Second Image */}
+        <div className="relative w-24 h-24 animate-wiggle">
           <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
+            src="/images/graduationcap.png" // Replace with your second image path
+            alt="Graduation Cap"
+            fill
+            className="object-contain"
           />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        </div>
+
+        {/* Third Image */}
+        <div className="relative w-24 h-24 animate-wiggle">
           <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
+            src="/images/notebook.png" // Replace with your third image path
+            alt="Notebook"
+            fill
+            className="object-contain"
           />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+        </div>
+      </div>
+
+      {/* Play Button with "Play" text and logo */}
+      <div className="flex flex-col items-center gap-4">
+        {/* Play Button */}
+        <button className="w-64 h-24 bg-gradient-to-r from-purple-600 to-blue-500 flex flex-col items-center justify-center shadow-lg hover:from-purple-700 hover:to-blue-600 transition-all rounded-lg text-white text-xl font-bold animate-pulse font-comic-sans">
+          <span>Play</span> {/* "Play" text */}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-8 w-8 mt-2"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"
+            />
+          </svg>
+        </button>
+
+        {/* Horizontal Divider */}
+        <div className="w-full border-t-2 border-purple-500 my-4"></div>
+      </div>
+
+      {/* Parent and Signup buttons */}
+      <div className="flex gap-6 mt-4">
+        <Button className="bg-purple-600 hover:from-pink-600 hover:to-orange-500 text-lg px-8 py-6 font-comic-sans">
+          Parent
+        </Button>
+        <Button className="bg-blue-500 hover:from-blue-500 hover:to-green-500 text-lg px-8 py-6 font-comic-sans">
+          Sign Up
+        </Button>
+      </div>
     </div>
   );
 }
