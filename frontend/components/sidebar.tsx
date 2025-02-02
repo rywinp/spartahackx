@@ -3,9 +3,9 @@ import Link from "next/link";
 
 export default async function Sidebar() {
     const childAccounts = [
-        {id: 1, name: "Bronny"},
-        {id: 2, name: "Bryce"},
-        {id: 3, name: "JR Smith"},
+        {id: 1, name: "LaMelo"},
+        {id: 2, name: "LiAngelo"},
+        {id: 3, name: "Lonzo"},
     ];
 
     // Common button styling for all buttons
@@ -15,37 +15,36 @@ export default async function Sidebar() {
         <div className="h-screen w-[250px] bg-gray-100 border-r border-gray-300 overflow-y-auto p-5">
             <h1 className="mb-4 text-xl font-bold">Actions</h1>
 
-            <Button
-                variant="outline"
-                className={`${buttonClasses} mb-10`}
-            >
-                <Link href="/parent/assign-quests/">
-                ✏️ Assign Quests
-                </Link>
-            </Button>
+            <Link href="/parent/assign-quests/">
+                <Button
+                    variant="outline"
+                    className={`${buttonClasses} mb-10`}
+                >
 
-            <Button
-                variant="outline"
-                className={`${buttonClasses} mb-10 px-5`} // Adjusted padding for this specific button
-            >
-                <Link href="/parent/assign-rewards/">
+                ✏️ Assign Quests
+                </Button>
+            </Link>
+
+            <Link href="/parent/assign-rewards/">
+                <Button
+                    variant="outline"
+                    className={`${buttonClasses} mb-10 px-5`} // Adjusted padding for this specific button
+                >
+
                 🏆 Assign Rewards
-                </Link>
-            </Button>
+                </Button>
+            </Link>
 
             <h1 className="mb-4 text-xl font-bold">Child Accounts</h1>
 
             {childAccounts.map((item) => (
-                <Button
-                    key={item.id}
-                    variant="outline"
-                    className={`${buttonClasses} mb-8 w-full`} // Added full width for child buttons
-                >
-                    <Link href={`/parent/${item.id}`}>
+            <Link key={item.id} href={`/parent/child/${item.id}`} passHref>
+                <Button variant="outline" className={`${buttonClasses} mb-8 w-full`}>
                     {item.name}
-                    </Link>
                 </Button>
-            ))}
+            </Link>
+        ))}
+
         </div>
     );
 }

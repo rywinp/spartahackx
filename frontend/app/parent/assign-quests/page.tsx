@@ -1,5 +1,10 @@
+import AssignQuests from "@/components/assign-quests";
+import Header from "@/components/header";
+
 export default async function Quests() {
     return (
-        <h1>Hello I'm Quests</h1>
+        <div className="">
+            <AssignQuests/>
+        </div>
     );
 }

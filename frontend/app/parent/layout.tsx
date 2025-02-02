@@ -11,12 +11,12 @@ export default async function Home({
     return (
         <div className="">
             <Header />
-            <main className="relative">
-                <div className="flex">
+            <main className="">
+                <div className="flex min-h-screen">
                     <Sidebar/>
-                    <main>
-                        {children}
-                    </main>
+                        <div className="flex-1 w-full">
+                            {children}
+                        </div>
                 </div>
             </main>
         </div>
