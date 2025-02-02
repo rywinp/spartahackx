@@ -13,5 +13,39 @@ def create_parent(request):
     parent, _ = ParentProfile.objects.get_or_create(clerk_user_id=clerk_user_id)
     return Response({"parent_id": parent.clerk_id}, status=status.HTTP_200_OK)
 
+class GetQuests(ListAPIView):
+    serializers = QuestSerializer
+    
+    def get_queryset(self):
+        role = self.request.role
+        if(role == User.Role.PARENT):
+            clerk_user_id = self.request.clerk_user_id
+            parent = ParentProfile.objects.get(clerk_user_id=clerk_user_id)
+            return Quest.objects.filter(parent=parent)
+        elif(role == User.Role.CHILD):
+            username = self.request.username
+            child = ChildProfile.objects.get(username=username)
+            return child.quests.all()
+        else:
+            return Quest.objects.none()
+        
+get_quests = GetQuests.as_view()
 
-class Create
+@api_view(['POST'])
+def create_quest(request):
+    clerk_id = request.data.get('clerk_id')
+    task_name = request.data.get('task_name')
+    task_description = request.data.get('task_description')
+    usernames = request.data.get('usernames', [])
+
+    try:
+        parent = ParentProfile.objects.get(clerk_id=clerk_id)
+        children = ChildProfile.objects.filter(username__in=usernames, parent=parent)
+        if len(children) != len(usernames):
+            return Response({'error': 'Invalid child usernames'}, status=status.HTTP_400_BAD_REQUEST)
+
+        quest = Quest.objects.create(task_name=task_name, task_description=task_description, parent=parent)
+        quest.children.set(children)
+        return Response({'id': quest.quest_name}, status=status.HTTP_201_CREATED)
+    except ParentProfile.DoesNotExist:
+        return Response({'error': 'Invalid clerk_id'}, status=status.HTTP_400_BAD_REQUEST)
