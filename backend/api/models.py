@@ -49,7 +49,6 @@ class ChildProfile(models.Model):
 
 
 
-    def 
 
     def complete_quest(self, quest):
         child_quest, created = ChildQuest.objects.get_or_create(
