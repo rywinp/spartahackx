@@ -47,9 +47,6 @@ class ChildProfile(models.Model):
     points = models.PositiveIntegerField(default=0)
     parent = models.ForeignKey(ParentProfile, on_delete=models.CASCADE)
 
-
-
-
     def complete_quest(self, quest):
         child_quest, created = ChildQuest.objects.get_or_create(
             child=self,
@@ -132,6 +129,7 @@ class Quest(models.Model):
         related_name='available_rewards'
     )
     parent = models.ForeignKey(ParentProfile, on_delete=models.CASCADE)
+    due = models.DateTimeField(blank=True, null=True)
     points = models.PositiveIntegerField()
 
     class Meta:
