@@ -4,9 +4,9 @@
 
 /* Define Gareny font */
 @font-face {
-  font-family: 'Gareny-4nYB9';
-  src: url('/fonts/gareny-font.woff2') format('woff2'), /* Update the path to your font file */
-       url('/fonts/gareny-font.woff') format('woff');
+  font-family: 'Gareny';
+  src: url('/fonts/gareny-font/Gareny-4nYB9.woff2') format('woff2'),
+       url('/fonts/gareny-font/Gareny-4nYB9.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
   font-display: swap; /* Ensures text is visible while the font loads */

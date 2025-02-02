@@ -1,9 +1,4 @@
 // app/parent/[id]/page.tsx
-interface Parent {
-    id: string;
-    name: string;
-    // Add other properties as needed
-  }
   
   // Generate static paths at build time
 //   export async function generateStaticParams() {

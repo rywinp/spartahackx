@@ -7,7 +7,6 @@ export default async function Home({
   }: Readonly<{
     children: React.ReactNode;
   }>) {
-    const user = await currentUser();
 
     return (
         <div className="">
