@@ -14,12 +14,12 @@ def create_parent(request):
         role=User.Role.PARENT
     )
     clerk_user_id = request.data.get('clerk_user_id')
-    parent, _ = ParentProfile.objects.get_or_create(user=user, clerk_user_id=clerk_user_id)
+    parent, _ = ParentProfile.objects.get_or_create(user=user, clerk_id=clerk_user_id)
     return Response({"parent_id": parent.clerk_id}, status=status.HTTP_200_OK)
 
 @api_view(['POST'])
 def create_child(request):
-    role = request.role
+    role = request.data.get('role')
     if(role != User.Role.PARENT):
         Response({'error': 'Must be a parent to send request'}, status=status.HTTP_401_UNAUTHORIZED)
     clerk_id = request.data.get('clerk_id')
@@ -41,7 +41,7 @@ def create_child(request):
             parent=parent,
             first_name=first_name,
             last_name=last_name,
-            coins=0,
+            points=0,
         )
         return Response({'id': child.username}, status=status.HTTP_201_CREATED)
     except ParentProfile.DoesNotExist:
@@ -49,13 +49,14 @@ def create_child(request):
 
 @api_view(['POST'])
 def create_quest(request):
-    role = request.role
+    role = request.data.get('role')
     if(role != User.Role.PARENT):
         Response({'error': 'Must be a parent to send request'}, status=status.HTTP_401_UNAUTHORIZED)
     clerk_id = request.data.get('clerk_id')
     quest_name = request.data.get('quest_name')
     quest_description = request.data.get('quest_description')
     usernames = request.data.get('usernames', [])
+    points = request.data.get('points')
 
     try:
         parent = ParentProfile.objects.get(clerk_id=clerk_id)
@@ -63,7 +64,7 @@ def create_quest(request):
         if len(children) != len(usernames):
             return Response({'error': 'Invalid child usernames'}, status=status.HTTP_400_BAD_REQUEST)
 
-        quest = Quest.objects.create(quest_name=quest_name, quest_description=quest_description, parent=parent)
+        quest = Quest.objects.create(quest_name=quest_name, quest_description=quest_description, parent=parent, points=points)
         quest.children.set(children)
         return Response({'id': quest.quest_name}, status=status.HTTP_201_CREATED)
     except ParentProfile.DoesNotExist:
@@ -71,35 +72,54 @@ def create_quest(request):
     
 @api_view(['POST'])
 def create_reward(request):
-    role = request.role
+    role = request.data.get('role')
     if(role != User.Role.PARENT):
         Response({'error': 'Must be a parent to send request'}, status=status.HTTP_401_UNAUTHORIZED)
     clerk_id = request.data.get('clerk_id')
     reward_name = request.data.get('reward_name')
     reward_description = request.data.get('reward_description')
     usernames = request.data.get('usernames', [])
+    points = request.data.get('points')
 
     try:
         parent = ParentProfile.objects.get(clerk_id=clerk_id)
-        reward = Reward.objects.create(reward_name=reward_name, reward_description=reward_description, parent=parent)
+        reward = Reward.objects.create(reward_name=reward_name, reward_description=reward_description, parent=parent, points=points)
         return Response({'id': reward.reward_name}, status=status.HTTP_201_CREATED)
     except ParentProfile.DoesNotExist:
         return Response({'error': 'Invalid clerk_id'}, status=status.HTTP_400_BAD_REQUEST)
 
 class GetQuests(ListAPIView):
-    serializers = QuestSerializer
+    serializer_class = QuestSerializer
     
     def get_queryset(self):
-        role = self.request.role
+        role = self.request.data.get('role')
         if(role == User.Role.PARENT):
-            clerk_user_id = self.request.clerk_user_id
-            parent = ParentProfile.objects.get(clerk_user_id=clerk_user_id)
+            clerk_user_id = self.request.data.get('clerk_user_id')
+            parent = ParentProfile.objects.get(clerk_id=clerk_user_id)
             return Quest.objects.filter(parent=parent)
         elif(role == User.Role.CHILD):
-            username = self.request.username
+            username = self.request.data.get('username')
             child = ChildProfile.objects.get(username=username)
             return child.quests.all()
         else:
             return Quest.objects.none()
         
 get_quests = GetQuests.as_view()
+
+class GetRewards(ListAPIView):
+    serializer_class = RewardSerializer
+    
+    def get_queryset(self):
+        role = self.request.data.get('role')
+        if(role == User.Role.PARENT):
+            clerk_user_id = self.request.data.get('clerk_user_id')
+            parent = ParentProfile.objects.get(clerk_id=clerk_user_id)
+            return Reward.objects.filter(parent=parent)
+        elif(role == User.Role.CHILD):
+            username = self.request.data.get('username')
+            child = ChildProfile.objects.get(username=username)
+            return child.rewards.all()
+        else:
+            return Reward.objects.none()
+        
+get_rewards = GetRewards.as_view()

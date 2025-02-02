@@ -14,11 +14,11 @@ class ChildSerializer(serializers.ModelSerializer):
 class QuestSerializer(serializers.ModelSerializer):
     class Meta:
         model = Quest
-        fields = '__all__'
+        fields = ['quest_name', 'quest_description', 'points']
 
 class RewardSerializer(serializers.ModelSerializer):
     class Meta:
         model = Reward
-        fields = '__all__'
+        fields = ['reward_name', 'reward_description', 'points']
 
   
