@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <div className="bg-gradient-to-br from-blue-200 to-purple-400 grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       {/* Pretty Questopia font */}
-      <h1 className="text-8xl font-extrabold text-center bg-gradient-to-r from-purple-600 to-blue-500 text-transparent bg-clip-text py-4 font-fredoka mt-16">
+      <h1 className="text-8xl font-extrabold text-center bg-gradient-to-r from-purple-600 to-blue-500 text-transparent bg-clip-text py-4 font-gareny mt-16">
         <strong>Questopia</strong>
       </h1>
 
@@ -45,7 +45,7 @@ export default function Home() {
       {/* Play Button with "Play" text and logo */}
       <div className="flex flex-col items-center gap-4">
         {/* Play Button */}
-        <button className="w-64 h-24 bg-gradient-to-r from-purple-600 to-blue-500 flex flex-col items-center justify-center shadow-lg hover:from-purple-700 hover:to-blue-600 transition-all rounded-lg text-white text-xl font-bold animate-pulse font-comic-sans">
+        <button className="w-64 h-24 bg-gradient-to-r from-purple-600 to-blue-500 flex flex-col items-center justify-center shadow-lg hover:from-purple-700 hover:to-blue-600 transition-all rounded-lg text-white text-xl font-bold animate-pulse font-comic-sans transform hover:scale-105 active:scale-95">
           <span>Play</span> {/* "Play" text */}
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -69,10 +69,10 @@ export default function Home() {
 
       {/* Parent and Signup buttons */}
       <div className="flex gap-6 mt-4">
-        <Button className="bg-purple-600 hover:from-pink-600 hover:to-orange-500 text-lg px-8 py-6 font-comic-sans">
+        <Button className="bg-purple-600 hover:from-pink-600 hover:to-orange-500 text-lg px-8 py-6 font-comic-sans transform hover:scale-105 active:scale-95">
           Parent
         </Button>
-        <Button className="bg-blue-500 hover:from-blue-500 hover:to-green-500 text-lg px-8 py-6 font-comic-sans">
+        <Button className="bg-blue-500 hover:from-blue-500 hover:to-green-500 text-lg px-8 py-6 font-comic-sans transform hover:scale-105 active:scale-95">
           Sign Up
         </Button>
       </div>

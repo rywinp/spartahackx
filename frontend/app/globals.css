@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Define Gareny font */
+@font-face {
+  font-family: 'Gareny-4nYB9';
+  src: url('/fonts/gareny-font.woff2') format('woff2'), /* Update the path to your font file */
+       url('/fonts/gareny-font.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap; /* Ensures text is visible while the font loads */
+}
+
 body {
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -87,3 +97,7 @@ body {
   }
 }
 
+/* Add Gareny as a utility class */
+.font-gareny {
+  font-family: 'Gareny', sans-serif;
+}
