@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib.auth.hashers import make_password
 from rest_framework.generics import ListCreateAPIView, CreateAPIView, ListAPIView
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -9,12 +10,42 @@ from .serializers import *
 
 @api_view(['POST'])
 def create_parent(request):
+    user = User.objects.create(
+        role=User.Role.PARENT
+    )
+    clerk_user_id = request.data.get('clerk_user_id')
+    parent, _ = ParentProfile.objects.get_or_create(user=user, clerk_user_id=clerk_user_id)
+    return Response({"parent_id": parent.clerk_id}, status=status.HTTP_200_OK)
+
+@api_view(['POST'])
+def create_child(request):
     role = request.role
     if(role != User.Role.PARENT):
         Response({'error': 'Must be a parent to send request'}, status=status.HTTP_401_UNAUTHORIZED)
-    clerk_user_id = request.data.get('clerk_user_id')
-    parent, _ = ParentProfile.objects.get_or_create(clerk_user_id=clerk_user_id)
-    return Response({"parent_id": parent.clerk_id}, status=status.HTTP_200_OK)
+    clerk_id = request.data.get('clerk_id')
+
+    try:
+        parent = ParentProfile.objects.get(clerk_id=clerk_id)
+        username = request.data.get('username')
+        password = request.data.get('password')
+        password = make_password(password)
+        first_name = request.data.get('first_name')
+        last_name = request.data.get('last_name')
+        user = User.objects.create(
+            role=User.Role.CHILD  # <-- Role set here
+        )
+        child = ChildProfile.objects.create(
+            user=user,
+            username=username,
+            password=password,
+            parent=parent,
+            first_name=first_name,
+            last_name=last_name,
+            coins=0,
+        )
+        return Response({'id': child.username}, status=status.HTTP_201_CREATED)
+    except ParentProfile.DoesNotExist:
+        return Response({'error': 'Invalid clerk_id'}, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
 def create_quest(request):
