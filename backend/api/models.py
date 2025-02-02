@@ -25,33 +25,37 @@ class User(models.Model):
 
 class ParentProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="parent_profile")
-    clerk_id = models.CharField()
+    clerk_id = models.CharField(max_length=256)
 
 class ChildProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="child_profile")
-    username = models.CharField()
-    password = models.CharField()
-    first_name = models.CharField()
-    last_name = models.CharField()
-    coins = models.PositiveIntegerField()
+    username = models.CharField(max_length=256)
+    password = models.CharField(max_length=256)
+    first_name = models.CharField(max_length=256)
+    last_name = models.CharField(max_length=256)
+    points = models.PositiveIntegerField()
     parent = models.ForeignKey(ParentProfile, on_delete=models.CASCADE)
 
 class Quest(models.Model):
-    task_name = models.CharField(max_length=30)
-    task_description = models.TextField()
+    quest_name = models.CharField(max_length=30)
+    quest_description = models.TextField()
     children = models.ManyToManyField(ChildProfile, related_name='quests')
+    parent = models.ForeignKey(ParentProfile, on_delete=models.CASCADE)
+    points = models.PositiveIntegerField()
 
     class Meta:
-        ordering = ["task_name"]
+        ordering = ["quest_name"]
 
     def __str__(self):
-        return self.task_name
+        return self.quest_name
     
     
 class Reward(models.Model):
     reward_name = models.CharField(max_length=30)
     reward_description = models.TextField()
     children = models.ManyToManyField(ChildProfile, related_name='rewards')
+    parent = models.ForeignKey(ParentProfile, on_delete=models.CASCADE)
+    points = models.PositiveIntegerField()
 
     class Meta:
         ordering = ["reward_name"]
