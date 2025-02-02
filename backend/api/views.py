@@ -34,8 +34,8 @@ get_quests = GetQuests.as_view()
 @api_view(['POST'])
 def create_quest(request):
     clerk_id = request.data.get('clerk_id')
-    task_name = request.data.get('task_name')
-    task_description = request.data.get('task_description')
+    quest_name = request.data.get('quest_name')
+    quest_description = request.data.get('quest_description')
     usernames = request.data.get('usernames', [])
 
     try:
@@ -44,8 +44,22 @@ def create_quest(request):
         if len(children) != len(usernames):
             return Response({'error': 'Invalid child usernames'}, status=status.HTTP_400_BAD_REQUEST)
 
-        quest = Quest.objects.create(task_name=task_name, task_description=task_description, parent=parent)
+        quest = Quest.objects.create(quest_name=quest_name, quest_description=quest_description, parent=parent)
         quest.children.set(children)
         return Response({'id': quest.quest_name}, status=status.HTTP_201_CREATED)
+    except ParentProfile.DoesNotExist:
+        return Response({'error': 'Invalid clerk_id'}, status=status.HTTP_400_BAD_REQUEST)
+    
+@api_view(['POST'])
+def create_reward(request):
+    clerk_id = request.data.get('clerk_id')
+    reward_name = request.data.get('reward_name')
+    reward_description = request.data.get('reward_description')
+    usernames = request.data.get('usernames', [])
+
+    try:
+        parent = ParentProfile.objects.get(clerk_id=clerk_id)
+        reward = Reward.objects.create(reward_name=reward_name, reward_description=reward_description, parent=parent)
+        return Response({'id': reward.reward_name}, status=status.HTTP_201_CREATED)
     except ParentProfile.DoesNotExist:
         return Response({'error': 'Invalid clerk_id'}, status=status.HTTP_400_BAD_REQUEST)
