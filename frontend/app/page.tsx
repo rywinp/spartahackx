@@ -48,7 +48,7 @@ export default function Home() {
       <div className="flex flex-col items-center gap-4 mt-8"> {/* Added mt-8 to move buttons up */}
         <div className="flex gap-6"> {/* Flex container for Play and Parent buttons */}
           {/* Play Button */}
-          <Link href="/child/sign-in/">
+          <Link href="/child/">
             <button className="w-64 h-24 bg-gradient-to-r from-purple-600 to-blue-500 flex flex-col items-center justify-center shadow-lg hover:from-purple-700 hover:to-blue-600 transition-all rounded-lg text-white text-xl font-bold animate-pulse font-comic-sans transform hover:scale-105 active:scale-95">
               <span>Play</span> {/* "Play" text */}
               <svg

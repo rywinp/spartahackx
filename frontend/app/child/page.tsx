@@ -13,7 +13,7 @@ export default async function Home() {
           <Link href="/child/locker">
             <div className="absolute left-32 top-1/2 transform -translate-y-1/2 w-96 h-96 cursor-pointer">
               <Image
-                src="/images/your-image.png" // Replace with your image path
+                src="/images/avatar.png" // Replace with your image path
                 alt="Locker"
                 fill
                 className="object-cover rounded-lg shadow-lg hover:opacity-90 transition-opacity"

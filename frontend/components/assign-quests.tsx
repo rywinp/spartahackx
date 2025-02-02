@@ -1,5 +1,5 @@
 export default async function AssignQuests () {
-    const names = ["Bronny", "Bryce", "JR Smith"];
+    const names = ['Lamelo Ball', 'LiAngelo Ball', 'Lonzo Ball'];
   return (
     <header className="p-6 border-b-2 border-gray-200">
     <h1 className="mb-4 text-2xl font-bold">Create New Quest</h1>

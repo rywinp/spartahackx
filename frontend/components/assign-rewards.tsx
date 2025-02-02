@@ -2,7 +2,7 @@
 
 import { useState, ChangeEvent, useRef } from 'react';
 
-const childrenNames = ['Bronny', 'Bryce', 'JR Smith'];
+const childrenNames = ['Lamelo Ball', 'LiAngelo Ball', 'Lonzo Ball'];
 
 export default function RewardHeader() {
   const [rewardName, setRewardName] = useState('');
