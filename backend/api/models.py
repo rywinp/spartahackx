@@ -2,6 +2,30 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from datetime import datetime
 from django.core.exceptions import ValidationError
+import requests
+import json
+import os
+
+
+#Receives a destination email, subject, and text body
+#returns json object of response
+
+def send_email(destination_email, subject, text_body):
+    url = "https://api.smtp2go.com/v3/email/send"
+    headers = {
+        'Content-Type': 'application/json',
+        'X-Smtp2go-Api-Key': os.environ.get('SMTP2GO_API_KEY'),
+        'accept': 'application/json'
+    }
+    data = {
+        "sender": "amoghmm@umich.edu",
+        "to": [destination_email],
+        "subject": subject,
+        "text_body": text_body
+    }
+    
+    response = requests.post(url, headers=headers, data=json.dumps(data))
+    return response.json()
 
 class User(models.Model):
     class Role(models.TextChoices):
@@ -22,6 +46,10 @@ class ChildProfile(models.Model):
     last_name = models.CharField(max_length=256)
     points = models.PositiveIntegerField(default=0)
     parent = models.ForeignKey(ParentProfile, on_delete=models.CASCADE)
+
+
+
+    def 
 
     def complete_quest(self, quest):
         child_quest, created = ChildQuest.objects.get_or_create(
